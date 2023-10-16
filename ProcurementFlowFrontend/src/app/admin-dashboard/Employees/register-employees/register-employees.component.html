@@ -1,0 +1,71 @@
+<div class="container">
+    <h4>Enter employee details </h4>
+    <hr />
+    <form class="form" #addForm="ngForm" (ngSubmit)="registerEmployee(addForm)">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="text" class="form-control" name="firstname" [ngModel]="employee.firstname"
+                        placeholder="Firstname " />
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="test" class="form-control" name="lastname" [ngModel]="employee.lastname"
+                        placeholder="Lastname" />
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="text" class="form-control" name="email" [ngModel]="employee.email"
+                        placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <select class="form-control" name="position" [ngModel]="employee.position">
+                        <option>Engineer</option>
+                        <option>Two Vale</option>
+                        <option>Three Vale</option>
+                        <option>Four Vale</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="text" class="form-control" name="phone" [ngModel]="employee.phone"
+                        placeholder="Phone " />
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="password" class="form-control" name="password" [ngModel]="employee.password"
+                        placeholder="Password" />
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"></span>
+                    <input type="text" class="form-control" name="imageUrl" placeholder="image URL " />
+                </div>
+                <div class="form-group">
+                    <label>Role</label><br>
+
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" name="role" [(ngModel)]="employee.role"
+                        value="ADMIN" checked="">Admin &nbsp;&nbsp;
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" name="role" [(ngModel)]="employee.role"
+                        value="PROCUREMENT_OFFICER">Procurement Officer&nbsp;&nbsp;
+                    <input type="radio" name="optionsRadios" id="optionsRadios3" name="role" [(ngModel)]="employee.role"
+                        value="STAFF">Staff
+                </div>
+
+
+            </div>
+        </div>
+        <br>
+        <div class="row text-center">
+            <div class="col-md-8">
+                <button [disabled]="addForm.invalid" type="submit" class="btn btn-lg btn-primary">Register
+                    employee</button>
+
+            </div>
+        </div>
+    </form>
+</div>

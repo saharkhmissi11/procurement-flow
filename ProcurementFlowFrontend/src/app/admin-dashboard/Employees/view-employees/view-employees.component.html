@@ -1,0 +1,54 @@
+<h4>Employees</h4>
+
+<div class="row">
+    <div class="col-md-11">
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Position</th>
+                        <th>Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let e of employees">
+                        <td>{{e.id}}</td>
+                        <td><span>{{e.firstname}}</span></td>
+                        <td>{{e.lastname}}</td>
+                        <td>{{e.email}}</td>
+                        <td>{{e.phone}}</td>
+                        <td>{{e.position}}</td>
+                        <td>
+                            <input class="modal-btn" type="checkbox" id="modal-btn" name="modal-btn" />
+                            <label for="modal-btn">edit</label>
+                            <div class="modal">
+                                <div class="modal-wrap">
+                                    <img src="https://assets.codepen.io/1462889/sl3.jpg" alt="">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
+                                        old.</p>
+                                </div>
+                            </div>&nbsp;&nbsp;
+                            
+
+                        </td>
+                        
+                    </tr>
+                   
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+    </div>
+
+</div>
