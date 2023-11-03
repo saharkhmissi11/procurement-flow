@@ -1,7 +1,8 @@
 package com.ordering.procurementFlow.config;
 
-import com.ordering.procurementFlow.repositories.EmployeeRepository;
+import com.ordering.procurementFlow.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,11 +23,11 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> employeeRepository.findByEmail(username)
+        return username -> userRepository.findByEmail(username)
                 .orElseThrow(()->new UsernameNotFoundException("User not found"));
     }
     @Bean
@@ -54,6 +55,10 @@ public class ApplicationConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 }

@@ -1,8 +1,8 @@
 package com.ordering.procurementFlow.services;
 
 import com.ordering.procurementFlow.Models.ChangePasswordRequest;
-import com.ordering.procurementFlow.Models.Employee;
-import com.ordering.procurementFlow.repositories.EmployeeRepository;
+import com.ordering.procurementFlow.Models.User;
+import com.ordering.procurementFlow.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,15 +16,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeService {
+public class UserService {
     private final PasswordEncoder passwordEncoder;
-    private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
     // get all employees
-    public List<Employee> findAllEmployees(){
-        return employeeRepository.findAll();
+    public List<User> findAllEmployees(){
+        return userRepository.findAll();
     }
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
-        var user = (Employee) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalStateException("Wrong password");
         }
@@ -34,14 +34,14 @@ public class EmployeeService {
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        employeeRepository.save(user);
+        userRepository.save(user);
     }
 
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) {
-                return employeeRepository.findByEmail(username)
+                return userRepository.findByEmail(username)
                         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
             }
         };

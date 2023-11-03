@@ -1,4 +1,4 @@
-package com.ordering.procurementFlow.authentication;
+package com.ordering.procurementFlow.DTO;
 
 import com.ordering.procurementFlow.Models.Role;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UserDTO {
     private String firstname;
     private String lastname;
     private String email;

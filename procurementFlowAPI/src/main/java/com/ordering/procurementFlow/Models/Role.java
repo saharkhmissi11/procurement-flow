@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public enum Role {
-        ADMIN(Set.of(
+    ADMIN(Set.of(
             Permission.ADMIN_READ,
             Permission.ADMIN_UPDATE,
             Permission.ADMIN_CREATE,
             Permission.ADMIN_DELETE
     )),
-    PROCUREMENT_OFFICER(Set.of(
-            Permission.PROCUREMENT_OFFICER_CREATE,
-            Permission.PROCUREMENT_OFFICER_DELETE,
-            Permission.PROCUREMENT_OFFICER_UPDATE,
-            Permission.PROCUREMENT_OFFICER_READ
+    PURCHASE_MANAGER(Set.of(
+            Permission.PURCHASE_MANAGER_CREATE,
+            Permission.PURCHASE_MANAGER_DELETE,
+            Permission.PURCHASE_MANAGER_UPDATE,
+            Permission.PURCHASE_MANAGER_READ
     )),
-    STAFF(Collections.emptySet())
+    EMPLOYEE(Collections.emptySet())
     ;
     @Getter
     private final Set<Permission> permissions;
@@ -31,7 +31,7 @@ public enum Role {
         var authorities=getPermissions()
                 .stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.name()))
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
         authorities.add(new SimpleGrantedAuthority(this.name()));
         return authorities;
     }

@@ -24,9 +24,7 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(body, true); // true indicates HTML content
-
         javaMailSender.send(message);
-
         // Save the sent email to the database for future reference
         Email email = new Email();
         email.setToEmail(to);

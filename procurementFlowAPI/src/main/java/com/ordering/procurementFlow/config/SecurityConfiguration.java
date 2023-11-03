@@ -16,8 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 import static com.ordering.procurementFlow.Models.Permission.*;
-import static com.ordering.procurementFlow.Models.Role.ADMIN;
-import static com.ordering.procurementFlow.Models.Role.PROCUREMENT_OFFICER;
+import static com.ordering.procurementFlow.Models.Role.*;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -35,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/requisition/**").permitAll()
                 .requestMatchers("/api/email/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole(ADMIN.name())
                 .requestMatchers(OPTIONS,"/api/admin/**").permitAll()
@@ -42,11 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfiguration {
                 .requestMatchers(GET,"/api/admin/**").hasAuthority(ADMIN_READ.name())
                 .requestMatchers(PUT,"/api/admin/**").hasAuthority(ADMIN_UPDATE.name())
                 .requestMatchers(DELETE,"/api/admin/**").hasAuthority(ADMIN_DELETE.name())
-                .requestMatchers("/api/procurement/**").hasRole(PROCUREMENT_OFFICER.name())
-                .requestMatchers(GET,"/api/procurement/**").hasAuthority(PROCUREMENT_OFFICER_READ.name())
-                .requestMatchers(POST,"/api/procurement/**").hasAuthority(PROCUREMENT_OFFICER_CREATE.name())
-                .requestMatchers(PUT,"/api/procurement/**").hasAuthority(PROCUREMENT_OFFICER_UPDATE.name())
-                .requestMatchers(DELETE,"/api/procurement/**").hasAuthority(PROCUREMENT_OFFICER_DELETE.name())
+                .requestMatchers("/api/procurement/**").hasRole(PURCHASE_MANAGER.name())
+                .requestMatchers(GET,"/api/procurement/**").hasAuthority(PURCHASE_MANAGER_READ.name())
+                .requestMatchers(POST,"/api/procurement/**").hasAuthority(PURCHASE_MANAGER_CREATE.name())
+                .requestMatchers(PUT,"/api/procurement/**").hasAuthority(PURCHASE_MANAGER_UPDATE.name())
+                .requestMatchers(DELETE,"/api/procurement/**").hasAuthority(PURCHASE_MANAGER_DELETE.name())
                 .anyRequest()
                 .authenticated()
                 .and()

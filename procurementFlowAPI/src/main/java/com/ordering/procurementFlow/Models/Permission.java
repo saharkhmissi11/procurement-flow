@@ -9,10 +9,10 @@ public enum Permission {
     ADMIN_UPDATE("admin:update"),
     ADMIN_CREATE("admin:create"),
     ADMIN_DELETE("admin:delete"),
-    PROCUREMENT_OFFICER_READ("procurementOfficer:read"),
-    PROCUREMENT_OFFICER_UPDATE("procurementOfficer:update"),
-    PROCUREMENT_OFFICER_CREATE("procurementOfficer:create"),
-    PROCUREMENT_OFFICER_DELETE("procurementOfficer:delete");
+    PURCHASE_MANAGER_READ("purchaseManager:read"),
+    PURCHASE_MANAGER_UPDATE("purchaseManager:update"),
+    PURCHASE_MANAGER_CREATE("purchaseManager:create"),
+    PURCHASE_MANAGER_DELETE("purchaseManager:delete");
 
 
     @Getter

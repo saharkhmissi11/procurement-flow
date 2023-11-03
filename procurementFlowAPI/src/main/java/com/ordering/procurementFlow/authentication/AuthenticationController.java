@@ -1,5 +1,6 @@
 package com.ordering.procurementFlow.authentication;
 
+import com.ordering.procurementFlow.DTO.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody UserDTO request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
@@ -36,6 +37,12 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
+        service.refreshToken(request,response);
+    }
 
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyCode(@RequestBody VerificationRequest verificationRequest) {
+        // Your method implementation here
+        return ResponseEntity.ok(service.verifyCode(verificationRequest));
     }
 }

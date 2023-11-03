@@ -10,7 +10,7 @@ export class EmployeeService {
   private apiServiceUrl=environment.apiBaseUrl;
    headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWhhci5raGVtaXNzaTFAZ21haWwuY29tIiwiaWF0IjoxNjk2ODAzMzQ3LCJleHAiOjE3MDQ4MDMzNDd9.pS_x2NW3LlCYNvEDNNLccBl15sbP3lOnMn3KT2_WcAs'
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWhhci5raG1pc3NpMUBnbWFpbC5jb20iLCJpYXQiOjE2OTc4MTA5MDksImV4cCI6MTcwNTgxMDkwOX0.VXeCilJd93ckGTmZjXX6csGdhJFiwWgHBsWRwyfn_-M'
   });
   constructor(private http :HttpClient) { }
   // Register employee
