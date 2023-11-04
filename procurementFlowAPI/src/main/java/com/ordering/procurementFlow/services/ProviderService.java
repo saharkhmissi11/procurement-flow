@@ -23,7 +23,7 @@ public class ProviderService {
         Optional<Provider> provider=providerRepo.findById(providerId);
         return provider.map(u->modelMapper.map(u,ProviderDto.class));
     }
-    public List<ProviderDto> findAllProvider(){
+    public List<ProviderDto> findAllProviders(){
         List<Provider> providers=providerRepo.findAll();
         return providers.stream().map(u->modelMapper.map(u, ProviderDto.class)).collect(Collectors.toList());
     }

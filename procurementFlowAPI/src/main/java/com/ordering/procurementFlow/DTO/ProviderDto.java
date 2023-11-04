@@ -13,9 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProviderDto {
     private Long id;
-    private  String codeQR;
-
-    @JsonIgnore
-    private List<Product> products;
+    private String email;
+    private  String name;
 
 }

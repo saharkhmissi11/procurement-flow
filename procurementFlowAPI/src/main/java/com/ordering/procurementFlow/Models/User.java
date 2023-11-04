@@ -42,7 +42,6 @@ public class User implements UserDetails, Serializable {
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Requisition> requisitions;
-
     @OneToMany(mappedBy = "user")
     private List<Report> reports ;
     @Override

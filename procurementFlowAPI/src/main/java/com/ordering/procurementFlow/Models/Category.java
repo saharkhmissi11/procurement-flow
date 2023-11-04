@@ -14,15 +14,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Category")
 @Entity
 public class Category {
     @Id
     @GeneratedValue
     private Long id ;
-    @Column(name = "name")
     private String name ;
-    @OneToMany(mappedBy="category")
+    private String description;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
-
 }

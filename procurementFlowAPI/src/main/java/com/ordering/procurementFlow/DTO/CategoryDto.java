@@ -12,6 +12,5 @@ import java.util.List;
 public class CategoryDto {
     private Long id ;
     private String name ;
-    @JsonIgnore
-    private List<Product> products;
+    private String description;
 }

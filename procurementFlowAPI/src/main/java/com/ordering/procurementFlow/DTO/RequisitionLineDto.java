@@ -10,5 +10,6 @@ public class RequisitionLineDto {
     private double quantity ;
     private double unitPrice ;
     private double totalAmount = quantity * unitPrice;
-    private  double nonCatalogItemDescription ;
+    private  String nonCatalogItemDescription ;
+    private Long productId;
 }

@@ -26,7 +26,7 @@ public class CategoryService {
         return category.map(u->modelMapper.map(u, CategoryDto.class));
     }
 
-    public List<CategoryDto> findAllCategory(){
+    public List<CategoryDto> findAllCategories(){
         List<Category> categories=categoryRepo.findAll();
         return categories.stream().map(u->modelMapper.map(u,CategoryDto.class)).collect(Collectors.toList());}
 

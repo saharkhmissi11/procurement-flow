@@ -14,23 +14,14 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
-
-    @NonNull
     @Column(name = "name")
     private String name;
-
-    @NonNull
     @Column(name = "price")
     private double price ;
     @ManyToOne
-    @JoinColumn(name="idUser")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name="providerId")
+    @JoinColumn(name="provider_id")
     private Provider provider ;
-
     @ManyToOne
-    @JoinColumn(name="categoryId")
+    @JoinColumn(name="category_id")
     private Category category ;
 }

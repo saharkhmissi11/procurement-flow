@@ -3,23 +3,25 @@ package com.ordering.procurementFlow.controllers;
 import com.ordering.procurementFlow.DTO.UserDTO;
 import com.ordering.procurementFlow.Models.User;
 import com.ordering.procurementFlow.authentication.AuthenticationService;
-import com.ordering.procurementFlow.authentication.RegisterRequest;
 import com.ordering.procurementFlow.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
-public class AdminController {
+public class UserController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
-
-    @PostMapping("/register-employee")
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDTO>> getUsers() throws AccessDeniedException {
+        return ResponseEntity.ok(userService.findAllUsers());
+    }
+    @PostMapping("/add")
     public ResponseEntity<?> registerEmployee(
             @RequestBody UserDTO request
     ) {
@@ -29,11 +31,6 @@ public class AdminController {
         }
         return ResponseEntity.accepted().build();
     }
-    @GetMapping("get-employees")
-    public ResponseEntity<List<User>> registerEmployee() {
-        return ResponseEntity.ok(userService.findAllEmployees());
-    }
-
 
     @GetMapping
     public String get() {
