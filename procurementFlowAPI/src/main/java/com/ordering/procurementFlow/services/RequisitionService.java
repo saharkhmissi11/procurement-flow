@@ -61,7 +61,6 @@ public class RequisitionService {
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + requisitionDto.getId_user() + " not found"));
         requisition.setUser(user);
         Requisition savedRequisition= requisitionRepo.save(requisition);
-        log.debug(savedRequisition.getRequisitionStatus().name());
         return modelMapper.map(savedRequisition,RequisitionDto.class);
     }
 

@@ -17,6 +17,6 @@ public class RequisitionDto {
     private Date requestedDate ;
     private LocalDateTime requisitionDate ;
     private double amount;
-    private RequisitionStatus requisitionStatus ;
+    private RequisitionStatus requisitionStatus;
     private Long id_user;
 }

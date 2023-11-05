@@ -28,8 +28,7 @@ public class Requisition {
     private LocalDateTime requisitionDate ;
     private double amount ;
     @Enumerated(EnumType.STRING)
-    private RequisitionStatus requisitionStatus=RequisitionStatus.Draft ;
-
+    private RequisitionStatus requisitionStatus;
     @ManyToOne
     @JoinColumn(name="id_user")
     private User user ;
