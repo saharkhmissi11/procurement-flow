@@ -29,8 +29,7 @@ body :
     "requestedDate": "2023-11-04",
     "purpose":"why",
     "details":"more details",
-    "id_user":1,    // ensuring u have this user id      
-    "buyingLegalEntityId": "ABC123"
+    "id_user":1    // ensuring u have this user id      
 }
 5) Add requisition line to the requisition number 7 (the user that created the requisition number 7 will add a requisition line to this requisition  with three elements of product number 2)
 POST : http://localhost:8080/api/requisition/7/addRequisitionLine
