@@ -1,0 +1,51 @@
+1) Add Provider
+POST : http://localhost:8080/api/provider/add
+body : 
+{
+    "name":"sahar provider",
+    "email":"sahar.khmissi@eniso.u-sousse.tn"
+}
+2) Add Category
+POST : http://localhost:8080/api/category/add
+body : 
+{
+  "name": "Development Tools",
+  "description": "Procurement of software development environments, IDEs, compilers, and version control systems."
+}
+3) Add Product  ( the admin will add a new product coming from the provider 1 under category 2)
+POST : http://localhost:8080/api/product/add
+body : 
+{
+    "name": "Tableau",
+    "price": 560.00,
+    "category_id":2, // ensuring u have this category id 
+    "provider_id":1  // ensuring u have this provider id 
+}
+4) Add Requisition   ( the user 1 will create a requisition)
+POST : http://localhost:8080/api/requisition/add
+body : 
+{
+    "name":"my requisition name",
+    "requestedDate": "2023-11-04",
+    "purpose":"why",
+    "details":"more details",
+    "id_user":1,    // ensuring u have this user id      
+    "buyingLegalEntityId": "ABC123"
+}
+5) Add requisition line to the requisition number 7 (the user that created the requisition number 7 will add a requisition line to this requisition  with three elements of product number 2)
+POST : http://localhost:8080/api/requisition/7/addRequisitionLine
+body : 
+{
+  "quantity": 3,
+  "productId":2
+}
+6/ GetRequisitionsByUserId (the user number 2 will get all his created requisitions)
+GET : http://localhost:8080/api/requisition/user/2
+
+
+
+
+
+
+
+

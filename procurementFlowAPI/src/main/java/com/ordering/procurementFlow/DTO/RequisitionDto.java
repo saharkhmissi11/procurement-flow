@@ -11,10 +11,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class RequisitionDto {
     private Long id;
+    private String name;
+    private String purpose;
+    private String details;
     private Date requestedDate ;
     private LocalDateTime requisitionDate ;
     private double amount;
     private RequisitionStatus requisitionStatus ;
-    private String buyingLegalEntityId ;
     private Long id_user;
 }

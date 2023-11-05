@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/find/{id}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> getProductById( @PathVariable("id")Long productId){
         Optional<ProductDto> productDto= productService.findProductById(productId);
         if (productDto.isPresent()) {
@@ -36,7 +36,7 @@ public class ProductController {
         }
     }
     @PostMapping("/add")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     //User doit être désérialisé (Conversion d'un objet Json ou xml en objet Java )
     public  ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto, HttpServletResponse response){
         ProductDto newProduct =productService.addProduct(productDto)  ;
@@ -44,13 +44,13 @@ public class ProductController {
     }
 
     @PutMapping("/update")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> UpdateProduct(@RequestBody ProductDto productDto , HttpServletResponse response) {
         ProductDto updateProduct= productService.UpdateProduct(productDto);
         return new ResponseEntity<>(updateProduct, HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> DeleteProduct(@PathVariable("id") Long id) {
         productService.DeleteProductById(id);
         return new ResponseEntity<>(HttpStatus.OK);

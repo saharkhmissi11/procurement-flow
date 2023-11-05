@@ -22,8 +22,6 @@ public class RequisitionLine {
     @ManyToOne
     @JoinColumn(name = "product_id") // Assuming this is the column name in your RequisitionLine table for the product
     private Product product;
-    //*** juste le CategoryName (hassitha zeyda puisque produit a un categ donc le categ on peut la connaitre depuis le prod)
-    private String CategoryName ;
     private double totalAmount = quantity * unitPrice;
     //*** a quoi sert ?? ======> 3la 5ter el user ynajem ya5tar product mch mawjoud fel catalog .. donc ahouka juste ya3ti 3lih description
     @Column(name = "nonCatalogItemDescription")

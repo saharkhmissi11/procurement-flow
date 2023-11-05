@@ -21,12 +21,15 @@ public class Requisition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String purpose;
+    private String details;
     private Date requestedDate ;
     private LocalDateTime requisitionDate ;
     private double amount ;
     @Enumerated(EnumType.STRING)
-    private RequisitionStatus requisitionStatus ;
-    private String buyingLegalEntityId  ;
+    private RequisitionStatus requisitionStatus=RequisitionStatus.Draft ;
+
     @ManyToOne
     @JoinColumn(name="id_user")
     private User user ;

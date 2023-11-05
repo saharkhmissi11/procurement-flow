@@ -10,6 +10,6 @@ public class RequisitionLineDto {
     private double quantity ;
     private double unitPrice ;
     private double totalAmount = quantity * unitPrice;
-    private  String nonCatalogItemDescription ;
+    private  String nonCatalogItemDescription ; // si le produit n'est pas dans la base de donnees
     private Long productId;
 }
