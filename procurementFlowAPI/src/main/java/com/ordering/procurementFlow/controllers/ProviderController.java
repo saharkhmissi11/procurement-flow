@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class ProviderController {
         }
     }
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     //User doit être désérialisé (Conversion d'un objet Json ou xml en objet Java )
     public  ResponseEntity<ProviderDto> addProvider(@RequestBody ProviderDto providerDto, HttpServletResponse response){
         ProviderDto newProvider =providerService.addProvider(providerDto)  ;
@@ -40,12 +42,14 @@ public class ProviderController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProviderDto> UpdateProvider(@RequestBody ProviderDto providerDto , HttpServletResponse response) {
         ProviderDto updateProvider = providerService.UpdateProvider(providerDto);
         return new ResponseEntity<>(updateProvider, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> DeleteProvider(@PathVariable("id") Long id){
         providerService.DeleteProviderById(id);
         return new ResponseEntity<>(HttpStatus.OK);

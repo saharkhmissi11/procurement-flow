@@ -32,7 +32,6 @@ public class ProductController {
             return new ResponseEntity<>(productDto.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         }
     }
     @PostMapping("/add")

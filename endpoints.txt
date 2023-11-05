@@ -21,15 +21,16 @@ body :
     "category_id":2, // ensuring u have this category id 
     "provider_id":1  // ensuring u have this provider id 
 }
-4) Add Requisition   ( the user 1 will create a requisition)
-POST : http://localhost:8080/api/requisition/add
+4) Add Requisition Header  ( the user 1 will create a requisition)
+POST : http://localhost:8080/api/requisition/addHeader
 body : 
 {
     "name":"my requisition name",
     "requestedDate": "2023-11-04",
     "purpose":"why",
     "details":"more details",
-    "id_user":1    // ensuring u have this user id      
+    "id_user":1,    // ensuring u have this user id      
+    "buyingLegalEntityId": "ABC123"
 }
 5) Add requisition line to the requisition number 7 (the user that created the requisition number 7 will add a requisition line to this requisition  with three elements of product number 2)
 POST : http://localhost:8080/api/requisition/7/addRequisitionLine
@@ -37,8 +38,11 @@ body :
 {
   "quantity": 3,
   "productId":2
-}
-6/ GetRequisitionsByUserId (the user number 2 will get all his created requisitions)
+} .... he can create multiple requisition lines 
+6) Create Requisition (send it to the purchase manager)
+POST : http://localhost:8080/api/requisition/7/send  (7 is requisitionId)
+send it to PM === change its status to Pending because PM will get all requisitions that are Pending for approval
+7) GetRequisitionsByUserId (the user number 2 will get all his created requisitions)
 GET : http://localhost:8080/api/requisition/user/2
 
 

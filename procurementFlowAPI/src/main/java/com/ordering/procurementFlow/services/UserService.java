@@ -4,8 +4,10 @@ import com.ordering.procurementFlow.DTO.RequisitionDto;
 import com.ordering.procurementFlow.DTO.UserDTO;
 import com.ordering.procurementFlow.Models.ChangePasswordRequest;
 import com.ordering.procurementFlow.Models.Requisition;
+import com.ordering.procurementFlow.Models.RequisitionStatus;
 import com.ordering.procurementFlow.Models.User;
 import com.ordering.procurementFlow.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,11 +39,9 @@ public class UserService {
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalStateException("Wrong password");
         }
-        // check if the two new passwords are the same
         if (!request.getNewPassword().equals(request.getConfirmationPassword())) {
             throw new IllegalStateException("Password are not the same");
         }
-
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }

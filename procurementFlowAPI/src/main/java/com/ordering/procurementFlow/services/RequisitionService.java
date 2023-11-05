@@ -33,28 +33,30 @@ public class RequisitionService {
     public Optional<RequisitionDto> findRequisitionById(long RequisitionId ){
         if (RequisitionId ==0 ){log.error("RequisitionId is null");}
         Optional<Requisition> requisition= requisitionRepo.findById(RequisitionId);
-        return Optional.ofNullable(requisition.map(u -> modelMapper.map(u, RequisitionDto.class)).orElseThrow(() -> new EntityNotFoundException("Requisition" + RequisitionId + "not found")));
+        return Optional.ofNullable(requisition.map(u -> convertToDto(u)).orElseThrow(() -> new EntityNotFoundException("Requisition" + RequisitionId + "not found")));
     }
-    /*public List<RequisitionDto> findAllRequisition(){
-        List<Requisition> requisitions= requisitionRepo.findAll() ;
-        return requisitions.stream().map(p->modelMapper.map(p,RequisitionDto.class)).collect(Collectors.toList()) ;
-    }*/
     public List<RequisitionDto> findAllRequisitions() {
         List<Requisition> requisitions = requisitionRepo.findAll();
         return requisitions.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
-    private RequisitionDto convertToDto(Requisition requisition) {
-        RequisitionDto requisitionDto = modelMapper.map(requisition, RequisitionDto.class);
-        if (requisition.getUser() != null) {
-            requisitionDto.setId_user(requisition.getUser().getId());
-        }
-
-        return requisitionDto;
+    public List<RequisitionDto> findApprovedRequisitions() {
+        List<Requisition> approvedRequisitions = requisitionRepo.findAll()
+                .stream()
+                .filter(requisition -> RequisitionStatus.Approved.equals(requisition.getRequisitionStatus()))
+                .collect(Collectors.toList());
+        return approvedRequisitions.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
-    public RequisitionDto addRequisition (RequisitionDto requisitionDto){
+    public List<RequisitionDto> findRequisitionsByUserId(Long userId) {
+        List<Requisition> requisitions = requisitionRepo.findAllByUser_Id(userId);
+        return requisitions.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    public RequisitionDto addRequisitionHeader (RequisitionDto requisitionDto){
         Requisition requisition=modelMapper.map(requisitionDto,Requisition.class);
         requisition.setRequisitionDate(LocalDateTime.now());
         User user = userRepository.findById(requisitionDto.getId_user())
@@ -63,19 +65,29 @@ public class RequisitionService {
         Requisition savedRequisition= requisitionRepo.save(requisition);
         return modelMapper.map(savedRequisition,RequisitionDto.class);
     }
-
-    public RequisitionDto UpdatedRequisition(RequisitionDto requisitionDto){
-        Requisition requisition=modelMapper.map(requisitionDto,Requisition.class);
+    public RequisitionDto addRequisition (Long id){
+        Requisition requisition = requisitionRepo.findById(id).get();
+        requisition.setRequisitionStatus(RequisitionStatus.Pending);
         Requisition savedRequisition= requisitionRepo.save(requisition);
         return modelMapper.map(savedRequisition,RequisitionDto.class);
     }
-
-
-    public RequisitionDto UpdatedRequisitionStatus(RequisitionDto requisitionDto , RequisitionStatus requisitionStatus){
-        requisitionDto.setRequisitionStatus(requisitionStatus);
+    public RequisitionDto updateRequisition(RequisitionDto requisitionDto){
         Requisition requisition=modelMapper.map(requisitionDto,Requisition.class);
-        requisitionRepo.save(requisition);
-        return modelMapper.map(requisition,RequisitionDto.class);
+        Requisition updatedRequisition= requisitionRepo.save(requisition);
+        return convertToDto(updatedRequisition);
+    }
+
+    public RequisitionDto approveRequisition(Long id){
+        Requisition requisition = requisitionRepo.findById(id).get();
+        requisition.setRequisitionStatus(RequisitionStatus.Approved);
+        Requisition approvedRequisition = requisitionRepo.save(requisition);
+        return convertToDto(approvedRequisition);
+    }
+    public RequisitionDto rejectRequisition(Long id){
+        Requisition requisition = requisitionRepo.findById(id).get();
+        requisition.setRequisitionStatus(RequisitionStatus.Rejected);
+        Requisition rejectedRequisition = requisitionRepo.save(requisition);
+        return convertToDto(rejectedRequisition);
     }
 
     public void DeleteRequisitionById(long requisitionId) {
@@ -90,9 +102,19 @@ public class RequisitionService {
         RequisitionStatus status = requisition.get().getRequisitionStatus();
         return status == RequisitionStatus.Approved;
     }
-    public List<RequisitionDto> getRequisitionsByUserId(Long userId) {
-        List<Requisition> requisitions = requisitionRepo.findAllByUser_Id(userId);
-        return requisitions.stream().map(requisition -> modelMapper.map(requisition, RequisitionDto.class)).collect(Collectors.toList());
+    public boolean isUserAuthorizedForRequisition(Long userId, Long requisitionId) {
+        Requisition requisition = requisitionRepo.findById(requisitionId).orElse(null);
+        return requisition != null && requisition.getUser().getId().equals(userId);
+    }
+    private RequisitionDto convertToDto(Requisition requisition) {
+        RequisitionDto requisitionDto = modelMapper.map(requisition, RequisitionDto.class);
+        if (requisition.getUser() != null) {
+            requisitionDto.setId_user(requisition.getUser().getId());
+        }
+        return requisitionDto;
+    }
+    public Requisition getRequisitionFromDTO(RequisitionDto requisitionDto){
+        return modelMapper.map(requisitionDto,Requisition.class);
     }
 
 }

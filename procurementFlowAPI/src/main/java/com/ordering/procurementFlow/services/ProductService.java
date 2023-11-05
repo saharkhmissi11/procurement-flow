@@ -29,16 +29,37 @@ public class ProductService {
     public Optional<ProductDto> findProductById(Long productId){
         if (productId==0){log.error("ProductId is null");}
         Optional<Product> product=productRepo.findById(productId);
-        return product.map(u->modelMapper.map(u, ProductDto.class));
+        return product.map(p->convertToDto(p));
     }
-
     public List<ProductDto> findAllProducts() {
         List<Product> products = productRepo.findAll();
         return products.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+    public ProductDto addProduct(ProductDto productDto) {
+        Product product = modelMapper.map(productDto, Product.class);
+        Category category = categoryRepo.findById(productDto.getCategory_id())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + productDto.getCategory_id()));
+        Provider provider = providerRepo.findById(productDto.getProvider_id())
+                .orElseThrow(() -> new EntityNotFoundException("Provider not found with id: " + productDto.getProvider_id()));
+        product.setCategory(category);
+        product.setProvider(provider);
+        Product savedProduct = productRepo.save(product);
+        return convertToDto(savedProduct);
+    }
 
+    public ProductDto UpdateProduct(ProductDto productDto){
+        Product product= modelMapper.map(productDto,Product.class);
+        Product updatedProduct = productRepo.save(product);
+        return convertToDto(updatedProduct);
+    }
+    public void DeleteProductById(long productId) {
+        if (productId == 0) {
+            log.error("productId is null");
+        }
+        productRepo.deleteById(productId);
+    }
     private ProductDto convertToDto(Product product) {
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
         if (product.getProvider() != null) {
@@ -48,33 +69,5 @@ public class ProductService {
             productDto.setCategory_id(product.getCategory().getId());
         }
         return productDto;
-    }
-
-    public ProductDto addProduct(ProductDto productDto) {
-        Product product = modelMapper.map(productDto, Product.class);
-        Category category = categoryRepo.findById(productDto.getCategory_id())
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + productDto.getCategory_id()));
-        Provider provider = providerRepo.findById(productDto.getProvider_id())
-                .orElseThrow(() -> new EntityNotFoundException("Provider not found with id: " + productDto.getProvider_id()));
-        product.setCategory(category);
-        product.setProvider(provider);
-
-        // Save the Product entity
-        Product savedProduct = productRepo.save(product);
-
-        // Map the saved Product entity back to ProductDto and return
-        return modelMapper.map(savedProduct, ProductDto.class);
-    }
-
-    public ProductDto UpdateProduct(ProductDto productDto){
-        Product product= modelMapper.map(productDto,Product.class);
-        Product savedProduct = productRepo.save(product);
-        return modelMapper.map(savedProduct,ProductDto.class);
-    }
-    public void DeleteProductById(long productId) {
-        if (productId == 0) {
-            log.error("productId is null");
-        }
-        productRepo.deleteById(productId);
     }
 }

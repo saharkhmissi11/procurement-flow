@@ -31,17 +31,6 @@ public class RequisitionLineService {
             Optional<RequisitionLine> requisitionLine=requisitionLineRepo.findById(requisitionLineId);
             return requisitionLine.map(u->modelMapper.map(u,RequisitionLineDto.class));
     }
-    /*
-     public List<RequisitionLineDto> findAllRequisitionLine(){
-        List<RequisitionLine> requisitionLines=requisitionLineRepo.findAll();
-         return requisitionLines.stream().map(u->modelMapper.map(u,RequisitionLineDto.class)).collect(Collectors.toList());
-     }*/
-
-     /*public RequisitionLineDto addRequisitionLine (RequisitionLineDto requisitionLineDto){
-        RequisitionLine requisitionLine= modelMapper.map(requisitionLineDto,RequisitionLine.class);
-         requisitionLineRepo.save(requisitionLine);
-         return modelMapper.map(requisitionLine,RequisitionLineDto.class);
-     }*/
      public RequisitionLineDto addRequisitionLineToRequisition(Long requisitionId, RequisitionLineDto requisitionLineDto) {
          Optional<Requisition> requisitionOptional = requisitionRepo.findById(requisitionId);
          if (requisitionOptional.isPresent()) {
@@ -83,10 +72,7 @@ public class RequisitionLineService {
          RequisitionLine requisitionLine= modelMapper.map(requisitionLineDto,RequisitionLine.class);
        RequisitionLine savedRequisitionLine = requisitionLineRepo.save(requisitionLine);
          return modelMapper.map(savedRequisitionLine,RequisitionLineDto.class);
-
      }
-
-
     public void DeleteRequisitionLineById(long requisitionLineId) {
         if (requisitionLineId == 0) {
             log.error("requisitionLineId is null");
