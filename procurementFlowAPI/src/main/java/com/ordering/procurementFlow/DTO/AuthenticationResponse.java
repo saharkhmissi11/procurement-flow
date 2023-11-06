@@ -1,4 +1,4 @@
-package com.ordering.procurementFlow.authentication;
+package com.ordering.procurementFlow.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

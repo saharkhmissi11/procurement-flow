@@ -25,7 +25,6 @@ public class ProductController {
     }
 
     @GetMapping("/find/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> getProductById( @PathVariable("id")Long productId){
         Optional<ProductDto> productDto= productService.findProductById(productId);
         if (productDto.isPresent()) {

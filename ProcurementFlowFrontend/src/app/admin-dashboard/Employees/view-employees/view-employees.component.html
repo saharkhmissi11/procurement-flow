@@ -7,7 +7,6 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
@@ -18,7 +17,6 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let e of employees">
-                        <td>{{e.id}}</td>
                         <td><span>{{e.firstname}}</span></td>
                         <td>{{e.lastname}}</td>
                         <td>{{e.email}}</td>
@@ -26,7 +24,7 @@
                         <td>{{e.position}}</td>
                         <td>
                             <input class="modal-btn" type="checkbox" id="modal-btn" name="modal-btn" />
-                            <label for="modal-btn">edit</label>
+                            <a href=""  ><i class="fa fa-edit" ></i></a> &nbsp;&nbsp;&nbsp;<a href=""  ><i class="fa fa-remove" ></i></a>&nbsp;&nbsp;&nbsp;<a href=""  ><i class="fa fa-eye" ></i></a>
                             <div class="modal">
                                 <div class="modal-wrap">
                                     <img src="https://assets.codepen.io/1462889/sl3.jpg" alt="">

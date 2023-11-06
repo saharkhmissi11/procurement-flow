@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Email } from 'classes/Email';
 import { Employee } from 'classes/Employee';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { EmailService } from 'src/app/services/email.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 @Component({
@@ -13,7 +14,10 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class RegisterEmployeesComponent implements OnInit {
   employee: any = {};
   email:any={}
-  constructor(private employeeService: EmployeeService,private emailService:EmailService) { }
+  authResponse: any = {};
+  message = '';
+  otpCode = '';
+  constructor(private employeeService: EmployeeService,private emailService:EmailService,private authService:AuthenticationService) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +25,6 @@ export class RegisterEmployeesComponent implements OnInit {
   registerEmployee(addForm: NgForm) {
     this.employeeService.registerEmployee(addForm.value).subscribe(
       (response: Employee) => {
-        
         this.email.toEmail="sahar.khmissi1@gmail.com"
         this.email.subject="Account Credentials"
         this.email.body="Dear"+addForm.value.firstname+addForm.value.lastname+", "+"Please find below your credentials .. Email : "+addForm.value.email+" and  Password : "+addForm.value.password

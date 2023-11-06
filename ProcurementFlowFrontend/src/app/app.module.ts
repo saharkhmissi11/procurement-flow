@@ -8,6 +8,7 @@ import { ViewEmployeesComponent } from './admin-dashboard/Employees/view-employe
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LoginComponent } from './login/login.component';
     AdminDashboardMainComponent,
     RegisterEmployeesComponent,
     ViewEmployeesComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

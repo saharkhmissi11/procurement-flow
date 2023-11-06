@@ -1,4 +1,4 @@
-package com.ordering.procurementFlow.authentication;
+package com.ordering.procurementFlow.DTO;
 
 import lombok.*;
 

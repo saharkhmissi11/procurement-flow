@@ -1,7 +1,10 @@
-package com.ordering.procurementFlow.authentication;
+package com.ordering.procurementFlow.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ordering.procurementFlow.DTO.UserDTO;
 import com.ordering.procurementFlow.Models.*;
+import com.ordering.procurementFlow.DTO.AuthenticationRequest;
+import com.ordering.procurementFlow.DTO.AuthenticationResponse;
+import com.ordering.procurementFlow.DTO.VerificationRequest;
 import com.ordering.procurementFlow.config.JwtService;
 import com.ordering.procurementFlow.repositories.UserRepository;
 import com.ordering.procurementFlow.repositories.TokenRepository;

@@ -47,8 +47,13 @@ public class RequisitionController {
         return new ResponseEntity<>(newRequisition,HttpStatus.CREATED );
     }
     @PostMapping("{id}/send")
-    public  ResponseEntity<RequisitionDto> createRequisition(@PathVariable("id") Long id){
-        RequisitionDto newRequisition =requisitionService.addRequisition(id)  ;
+    public  ResponseEntity<RequisitionDto> createRequisition(@PathVariable("id") Long requisitionId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long authenticatedUserId = ((User) authentication.getPrincipal()).getId();
+        if (!requisitionService.isUserAuthorizedForRequisition(authenticatedUserId, requisitionId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        RequisitionDto newRequisition =requisitionService.addRequisition(requisitionId)  ;
         return new ResponseEntity<>(newRequisition,HttpStatus.CREATED );
     }
     @PutMapping("/update")
@@ -63,27 +68,27 @@ public class RequisitionController {
     }
     @PutMapping("/approve/{id}")
     @PreAuthorize("hasRole('PURCHASE_MANAGER')")
-    public ResponseEntity<RequisitionDto> approveRequisition(@PathVariable("id") Long id){
-        return new ResponseEntity<RequisitionDto>(requisitionService.approveRequisition(id), HttpStatus.OK);
+    public ResponseEntity<RequisitionDto> approveRequisition(@PathVariable("id") Long requisitionId){
+        return new ResponseEntity<RequisitionDto>(requisitionService.approveRequisition(requisitionId), HttpStatus.OK);
     }
     @PutMapping("/reject/{id}")
     @PreAuthorize("hasRole('PURCHASE_MANAGER')")
-    public ResponseEntity<RequisitionDto> rejectRequisition(@PathVariable("id") Long id){
-        return new ResponseEntity<RequisitionDto>(requisitionService.rejectRequisition(id), HttpStatus.OK);
+    public ResponseEntity<RequisitionDto> rejectRequisition(@PathVariable("id") Long requisitionId){
+        return new ResponseEntity<RequisitionDto>(requisitionService.rejectRequisition(requisitionId), HttpStatus.OK);
     }
     @PutMapping("/isRequisitionApproved/{id}")
-    public ResponseEntity<Boolean> isRequisitionApproved(@PathVariable("id") Long id){
-        boolean isRequisitionApproved = requisitionService.isRequisitionApproved(id);
+    public ResponseEntity<Boolean> isRequisitionApproved(@PathVariable("id") Long requisitionId){
+        boolean isRequisitionApproved = requisitionService.isRequisitionApproved(requisitionId);
         return new ResponseEntity<Boolean>(isRequisitionApproved, HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> DeleteRequisition(@PathVariable("id") Long id){
+    public ResponseEntity<?> DeleteRequisition(@PathVariable("id") Long requisitionId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long authenticatedUserId = ((User) authentication.getPrincipal()).getId();
-        if (!requisitionService.isUserAuthorizedForRequisition(authenticatedUserId, id)) {
+        if (!requisitionService.isUserAuthorizedForRequisition(authenticatedUserId, requisitionId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        requisitionService.DeleteRequisitionById(id);
+        requisitionService.DeleteRequisitionById(requisitionId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/{id}/requisitionLines")
@@ -98,6 +103,11 @@ public class RequisitionController {
     }
     @PostMapping("/{requisitionId}/addRequisitionLine")
     public ResponseEntity<RequisitionLineDto> addRequisitionLineToRequisition(@PathVariable("requisitionId") Long requisitionId, @RequestBody RequisitionLineDto requisitionLineDto, HttpServletResponse response) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long authenticatedUserId = ((User) authentication.getPrincipal()).getId();
+        if (!requisitionService.isUserAuthorizedForRequisition(authenticatedUserId, requisitionId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         RequisitionLineDto newRequisitionLine = requisitionLineService.addRequisitionLineToRequisition(requisitionId, requisitionLineDto);
         return new ResponseEntity<>(newRequisitionLine, HttpStatus.CREATED);
     }

@@ -4,13 +4,15 @@ import { AdminDashboardMainComponent } from './admin-dashboard/admin-dashboard-m
 import { RegisterEmployeesComponent } from './admin-dashboard/Employees/register-employees/register-employees.component';
 import { ViewEmployeesComponent } from './admin-dashboard/Employees/view-employees/view-employees.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {path:'admin-dashboard',component:AdminDashboardMainComponent,children:[
     {path:'register-employees',component:RegisterEmployeesComponent},
     {path:'view-employees',component:ViewEmployeesComponent}
   ]},
-  {path:'login',component:LoginComponent}
+  {path:'login',component:LoginComponent},
+  {path:'register',component:RegisterComponent}
   
  
 ];
